@@ -39,16 +39,27 @@
     </div>
     <script>
         let timeDivisions = document.getElementById('timeDivisions')
-
+        var getDaysInMonth = function(month,year) {
+            return new Date(year, month, 0).getDate();
+        };
+        function dayOfTheYear() {
+            // for today
+            var M=[31,28,31,30,31,30,31,31,30,31,30,31]; var x=new Date(); var m=x.getMonth();
+            var y=x.getFullYear(); if (y % 400 == 0 || (y % 4 == 0 && y % 100 != 0)) {++M[1];}
+            var Y=0; for (var i=0;i<m;++i) {Y+=M[i];}
+            return Y+x.getDate();
+        }
         function updateDisplay() {
             timeDivisions.innerHTML = "";
             const now = new Date()
+            const dayOfYear = dayOfTheYear()
+            const daysInMonth = getDaysInMonth(now.getMonth(), now.getFullYear());
             createTimeCounter("Seconds", 60, now.getSeconds() + now.getMilliseconds()/1000, 60)
             createTimeCounter("Minutes", 60, now.getMinutes(), 60)
             createTimeCounter("Quarter Hours", 4, now.getHours(), 24)
             createTimeCounter("Hours", 24, now.getHours(), 24)
-            createTimeCounter("Days/Month", 30, now.getDate(), 30)
-            createTimeCounter("Days/Year", 365, now.getDate(), 365)
+            createTimeCounter("Days/Month", daysInMonth, now.getDate(), daysInMonth)
+            createTimeCounter("Days/Year", 365, dayOfYear, 365)
         }
 
         function createTimeCounter(label, numDivisions, valueToDisplay, outOf) {
