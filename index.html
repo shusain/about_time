@@ -52,11 +52,13 @@
         function updateDisplay() {
             timeDivisions.innerHTML = "";
             const now = new Date()
+            // experimenting with future
+            // now.setTime(now.getTime()+15*60*1000)
             const dayOfYear = dayOfTheYear()
             const daysInMonth = getDaysInMonth(now.getMonth(), now.getFullYear());
             createTimeCounter("Seconds", 60, now.getSeconds() + now.getMilliseconds()/1000, 60)
             createTimeCounter("Minutes", 60, now.getMinutes(), 60)
-            createTimeCounter("Quarter Hours", 4, now.getHours(), 24)
+            createTimeCounter("Quarter Hours", 4, now.getMinutes(), 60)
             createTimeCounter("Hours", 24, now.getHours(), 24)
             createTimeCounter("Days/Month", daysInMonth, now.getDate(), daysInMonth)
             createTimeCounter("Days/Year", 365, dayOfYear, 365)
